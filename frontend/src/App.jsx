@@ -7,6 +7,9 @@ axios.defaults.baseURL = "http://localhost:8080"
 function App() {
 
   const [user, setUser] = useState([])
+  const [name, setName] = useState('')
+  const [age, setAge] = useState(0)
+
 
   const listarUsuarios = async () => {
 
@@ -16,19 +19,18 @@ function App() {
 
   }
   const newUser = {
-    
     name: 'nuevoUsuario',
     age: 3,
   };
   const crear = () => {
 
     axios.post('/createUser', newUser)
-    .then((response) => {
-      console.log('Usuario creado con éxito:', response.data);
-    })
-    .catch((error) => {
-      console.error('Error al crear el usuario:', error);
-    });
+      .then((response) => {
+        console.log('Usuario creado con éxito:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error al crear el usuario:', error);
+      });
 
   }
 
@@ -40,6 +42,17 @@ function App() {
 
   return (
     <>
+      Nombre:
+      <input type="text"
+        onChange={(e) => setName(e.target.value)}
+      />
+      Edad:
+      <input type="text"
+        onChange={(e) => setAge(e.target.value)}
+      />
+      <button
+        onClick={crear}
+      >crear</button>
       <h1>Usuarios</h1>
       {user.map((val) => {
         return (
@@ -47,9 +60,7 @@ function App() {
 
         )
       })}
-      <button
-      onClick={crear}
-      >crear</button>
+
     </>
   )
 }
